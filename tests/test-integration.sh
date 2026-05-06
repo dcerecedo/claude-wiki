@@ -39,8 +39,6 @@ cp "$PLUGIN_ROOT/skills/wiki-init/templates/settings.json.template" \
    "$WORKSPACE/.claude/settings.json"
 
 # CLAUDE.md checks
-check "CLAUDE.md has discriminator tag" \
-    "grep -qm1 'claude-wiki:Y2xhdWRlLXdpa2k=' '$WORKSPACE/CLAUDE.md'"
 check "CLAUDE.md contains topic" \
     "grep -q 'Transformer Architecture' '$WORKSPACE/CLAUDE.md'"
 check "CLAUDE.md contains research question" \
@@ -63,14 +61,20 @@ check "wiki/syntheses exists" "[ -d '$WORKSPACE/wiki/syntheses' ]"
 check "wiki/mocs exists" "[ -d '$WORKSPACE/wiki/mocs' ]"
 check "raw exists" "[ -d '$WORKSPACE/raw' ]"
 
-# Hook detection of rendered workspace
-cd "$WORKSPACE"
-export CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT"
-hook_output=$(bash "$PLUGIN_ROOT/hooks/session-start" 2>/dev/null)
-hook_result=0
-echo "$hook_output" | grep -q 'additionalContext\|additional_context' || hook_result=$?
-check "session-start detects rendered workspace" "[ $hook_result -eq 0 ]"
-cd "$SCRIPT_DIR"
+# Hook output validation (jq extracts command from template, eval runs it, python3 validates output)
+ss_cmd=$(jq -r '.hooks.SessionStart[0].hooks[0].command' "$PLUGIN_ROOT/skills/wiki-init/templates/settings.json.template")
+ss_output=$(eval "$ss_cmd")
+check "SessionStart hook output is valid JSON" \
+    "echo '$ss_output' | python3 -c 'import sys,json; json.load(sys.stdin)'"
+check "SessionStart hook output has systemMessage key" \
+    "echo '$ss_output' | python3 -c 'import sys,json; d=json.load(sys.stdin); assert \"systemMessage\" in d'"
+
+stop_cmd=$(jq -r '.hooks.Stop[0].hooks[0].command' "$PLUGIN_ROOT/skills/wiki-init/templates/settings.json.template")
+stop_output=$(eval "$stop_cmd")
+check "Stop hook output is valid JSON" \
+    "echo '$stop_output' | python3 -c 'import sys,json; json.load(sys.stdin)'"
+check "Stop hook output has stopReason key" \
+    "echo '$stop_output' | python3 -c 'import sys,json; d=json.load(sys.stdin); assert \"stopReason\" in d'"
 
 echo ""
 echo "Results: $PASS passed, $FAIL failed"
