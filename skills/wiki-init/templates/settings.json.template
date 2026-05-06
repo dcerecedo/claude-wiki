@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"This is a wiki workspace. Please invoke the wiki-open skill now: run git pull if a remote is configured, then run wiki-session-review and report session context.\"}}'",
+            "command": "echo '{\"systemMessage\":\"This is a wiki workspace. Please invoke the wiki-open skill now: run git pull if a remote is configured, then run wiki-session-review and report session context.\"}'",
             "async": false
           }
         ]
@@ -18,7 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"Stop\",\"additionalContext\":\"This wiki session is ending. Please invoke the wiki-close skill now: check git status, commit if there are changes, and push if a remote is configured.\"}}'",
+            "command": "echo '{\"stopReason\":\"This wiki session is ending. Please invoke the wiki-close skill now: check git status, commit if there are changes, and push if a remote is configured.\"}'",
             "async": false
           }
         ]

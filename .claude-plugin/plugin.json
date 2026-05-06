@@ -1,0 +1,8 @@
+{
+  "name": "wiki",
+  "description": "Personal knowledge management wiki with skills for ingesting sources, synthesizing concepts, and querying your knowledge base",
+  "author": {
+    "name": "dcerecedo",
+    "email": "daniel.cerecedo@gmail.com"
+  }
+}
