@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# SessionStart hook for wiki plugin
+# Detects wiki workspaces via discriminator tag and injects context to trigger wiki-open
+
+set -euo pipefail
+
+# Detect wiki workspace — fast single-line grep on first match
+if ! grep -qm1 'claude-wiki:Y2xhdWRlLXdpa2k=' "${PWD}/CLAUDE.md" 2>/dev/null; then
+  exit 0
+fi
+
+# Escape string for JSON embedding
+escape_for_json() {
+    local s="$1"
+    s="${s//\\/\\\\}"
+    s="${s//\"/\\\"}"
+    s="${s//$'\n'/\\n}"
+    s="${s//$'\r'/\\r}"
+    s="${s//$'\t'/\\t}"
+    printf '%s' "$s"
+}
+
+context="This is a wiki workspace managed by the wiki plugin. Please invoke the wiki-open skill now to start the session: run git pull if a remote is configured, then run wiki-session-review and report the session context."
+context_escaped=$(escape_for_json "$context")
+
+if [ -n "${CURSOR_PLUGIN_ROOT:-}" ]; then
+  printf '{\n  "additional_context": "%s"\n}\n' "$context_escaped"
+elif [ -n "${CLAUDE_PLUGIN_ROOT:-}" ] && [ -z "${COPILOT_CLI:-}" ]; then
+  printf '{\n  "hookSpecificOutput": {\n    "hookEventName": "SessionStart",\n    "additionalContext": "%s"\n  }\n}\n' "$context_escaped"
+else
+  printf '{\n  "additionalContext": "%s"\n}\n' "$context_escaped"
+fi
+
+exit 0
