@@ -12,7 +12,7 @@ This repo is the source for the `wiki` Claude Code plugin. Before making changes
 
 - `skills/` — one directory per skill, each containing `SKILL.md` and optional assets
 - `docs/` — design specs and implementation plans (not part of installable surface)
-- `tests/` — bash tests for hook scripts
+- `tests/` — bash tests for template rendering and hook output validation
 
 ## Testing Skills
 
