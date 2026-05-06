@@ -101,7 +101,13 @@ Git is the log. No `log.md`.
 ```
 
 ### `hooks/session-start`
-Detects whether the current working directory is a wiki workspace (presence of `CLAUDE.md` containing `## Agent Identity`) and injects a `<system-reminder>` prompting Claude to invoke `wiki-open` at session start. If not a wiki workspace, exits silently — the plugin is inert outside wiki projects.
+Detects whether the current working directory is a wiki workspace by grepping `CLAUDE.md` for the discriminator tag `claude-wiki:Y2xhdWRlLXdpa2k=` (base64 of `"claude-wiki"`). If found, injects a `<system-reminder>` prompting Claude to invoke `wiki-open`. If not found, exits silently — the plugin is inert outside wiki projects.
+
+```bash
+grep -qm1 'claude-wiki:Y2xhdWRlLXdpa2k=' "${PWD}/CLAUDE.md" 2>/dev/null
+```
+
+The tag is a valid Markdown comment, renders as nothing in Obsidian, contains no regex special characters, and is unique enough to never appear by coincidence.
 
 ---
 
@@ -111,7 +117,7 @@ Two layers of hooks coordinate session lifecycle:
 
 **Plugin-level `SessionStart` hook** (global, fires in every session):
 - Bash script run via `$CLAUDE_PLUGIN_ROOT/hooks/run-hook.cmd`
-- Detects wiki workspace by checking `CLAUDE.md` for wiki markers
+- Detects wiki workspace via `grep -qm1 'claude-wiki:Y2xhdWRlLXdpa2k=' CLAUDE.md`
 - If wiki: outputs `additionalContext` JSON telling Claude to invoke `wiki-open`
 - If not wiki: exits 0 silently
 
@@ -163,6 +169,8 @@ Subagents spawned within a session perform content work only (ingest, synth, que
 ## CLAUDE.md Template
 
 ```markdown
+[//]: # (claude-wiki:Y2xhdWRlLXdpa2k=)
+
 # Wiki: <topic>
 
 ## Research Question
@@ -191,7 +199,7 @@ maintain a thesaurus of domain terms, and synthesize connections across concepts
 - Prefer [[links]] over repetition — if a concept exists, reference it
 ```
 
-The `## Agent Identity` marker is also used by the plugin's `session-start` hook to detect wiki workspaces.
+The first line of every wiki `CLAUDE.md` is a Markdown comment tag used by the plugin's `session-start` hook to detect wiki workspaces (see Hook Mechanism).
 
 ---
 
