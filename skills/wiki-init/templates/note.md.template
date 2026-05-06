@@ -1,0 +1,12 @@
+---
+title: {{TITLE}}
+tags: [concept, {{DOMAIN_TAG}}]
+aliases: []
+created: {{DATE}}
+sources: [{{SOURCE_PATH}}]
+---
+
+{{CONTENT}}
+
+## Related
+{{RELATED_LINKS}}

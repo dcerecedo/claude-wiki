@@ -1,0 +1,15 @@
+---
+title: {{TITLE}}
+tags: [synthesis]
+created: {{DATE}}
+sources: [{{SOURCE_LIST}}]
+---
+
+## Synthesis
+{{CONTENT}}
+
+## Concepts
+{{CONCEPT_LINKS}}
+
+## Open Questions
+{{QUESTIONS}}

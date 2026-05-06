@@ -1,0 +1,15 @@
+---
+title: {{TITLE}}
+type: {{TYPE}}
+url: {{URL}}
+date: {{DATE}}
+---
+
+## Summary
+{{AGENT_SUMMARY}}
+
+## Key Excerpts
+{{EXCERPTS}}
+
+## Concepts Identified
+{{CONCEPT_LIST}}
