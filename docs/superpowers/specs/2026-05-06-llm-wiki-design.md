@@ -44,7 +44,7 @@ All tooling lives globally and is available across every wiki project.
 ```
 ~/Vaults/<topic>/
   .claude/
-    settings.json        ← hooks: PostSessionStart → wiki-open, PreSessionEnd → wiki-close
+    settings.json        ← hooks: PostSessionStart and PreSessionEnd invoke wiki-open/wiki-close via Claude CLI
   CLAUDE.md              ← generated from template; topic, research question, agent behavior
   wiki/
     concepts/            ← atomic concept notes, one idea per file
@@ -86,6 +86,9 @@ Git is the log. No `log.md`.
 3. Generate commit message summarizing session work (concepts added, sources ingested, thesaurus terms updated) from git diff
 4. `git commit`
 5. `git push` if remote configured
+
+### Hook mechanism
+Hooks in `.claude/settings.json` run shell commands. The `wiki-init` skill generates hooks that invoke the Claude CLI to run `/wiki-open` and `/wiki-close` as slash commands within the session context.
 
 ### Idempotency
 Both skills rely on git state, not a flag file. `git pull` when up to date is a no-op. `git commit` with no changes is skipped. Safe to call multiple times or from concurrent sessions.
@@ -205,7 +208,7 @@ tags: [thesaurus]
 aliases: [<synonym1>, <synonym2>]
 created: <date>
 broader: [[<broader-term>]]
-narrower: [[[<narrower-term>]]]
+narrower: [[<narrower-term>]]
 related: [[<related-term>]]
 ---
 ```
