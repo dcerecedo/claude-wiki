@@ -63,18 +63,21 @@ check "raw exists" "[ -d '$WORKSPACE/raw' ]"
 
 # Hook output validation (jq extracts command from template, eval runs it, python3 validates output)
 ss_cmd=$(jq -r '.hooks.SessionStart[0].hooks[0].command' "$PLUGIN_ROOT/skills/wiki-init/templates/settings.json.template")
-ss_output=$(eval "$ss_cmd")
+ss_out=$(mktemp)
+eval "$ss_cmd" > "$ss_out" 2>/dev/null || true
 check "SessionStart hook output is valid JSON" \
-    "echo '$ss_output' | python3 -c 'import sys,json; json.load(sys.stdin)'"
+    "python3 -m json.tool '$ss_out' > /dev/null 2>&1"
 check "SessionStart hook output has systemMessage key" \
-    "echo '$ss_output' | python3 -c 'import sys,json; d=json.load(sys.stdin); assert \"systemMessage\" in d'"
+    "python3 -c \"import json; d=json.load(open('$ss_out')); assert 'systemMessage' in d\""
 
 stop_cmd=$(jq -r '.hooks.Stop[0].hooks[0].command' "$PLUGIN_ROOT/skills/wiki-init/templates/settings.json.template")
-stop_output=$(eval "$stop_cmd")
+stop_out=$(mktemp)
+eval "$stop_cmd" > "$stop_out" 2>/dev/null || true
 check "Stop hook output is valid JSON" \
-    "echo '$stop_output' | python3 -c 'import sys,json; json.load(sys.stdin)'"
+    "python3 -m json.tool '$stop_out' > /dev/null 2>&1"
 check "Stop hook output has stopReason key" \
-    "echo '$stop_output' | python3 -c 'import sys,json; d=json.load(sys.stdin); assert \"stopReason\" in d'"
+    "python3 -c \"import json; d=json.load(open('$stop_out')); assert 'stopReason' in d\""
+rm -f "$ss_out" "$stop_out"
 
 echo ""
 echo "Results: $PASS passed, $FAIL failed"
