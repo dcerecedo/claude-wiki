@@ -64,7 +64,16 @@ echo "Raw sources: $(find raw -name '*.md' 2>/dev/null | wc -l)"
 echo "Last commit: $(git log -1 --format='%ar: %s' 2>/dev/null || echo 'no commits yet')"
 ```
 
-### 6. Report
+### 6. Classify each finding
+
+For each finding, determine its fix type before reporting:
+
+- `frontmatter` — add or edit a frontmatter field in one or more existing files
+- `skill-edit` — insert a step or guard into an existing SKILL.md
+- `skill-create` — create a new `skills/wiki-<name>/SKILL.md` encapsulating the procedure
+- `behavioral` — no file change possible; guidance only (e.g., session size, workflow habits)
+
+### 7. Report
 
 Use exactly this format:
 
@@ -73,15 +82,59 @@ Wiki: <topic from CLAUDE.md first H1> | <N> concepts | <N> thesaurus | <N> raw s
 Last session: <relative time> — "<last commit message>"
 
 Suggestions:
-- <suggestion>
-- <suggestion>
+1. <suggestion>
+   Fix: <one-line description of what applying the fix would do>
+
+2. <suggestion>
+   Fix: behavioral — no automatic fix available
+
+...
+
+To apply a fix, reply: fix <N>  — or fix all to apply all non-behavioral fixes.
 ```
 
-If there are no suggestions: write `No patterns identified — clean session history.`
+Number each suggestion. Every suggestion must have a `Fix:` line. Behavioral fixes must say
+`behavioral — no automatic fix available` so the user knows upfront that no action is possible.
 
-### 7. Constraints
+If there are no suggestions: write `No patterns identified — clean session history.` with no fix prompt.
 
-- Suggestions are advisory only — never auto-apply them
-- Do not invent patterns that are not supported by actual file or conversation evidence
-- If a suggestion involves creating a new skill, name the skill and describe in one
-  sentence what it would do (it would live in `skills/wiki-<name>/SKILL.md`)
+### 8. Apply fixes on request
+
+When the user replies with `fix <N>` or `fix all`, apply each requested fix according to its type.
+Skip behavioral fixes silently (they cannot be applied) and note them in the confirmation.
+
+**frontmatter fix:**
+Edit the file(s) named in the suggestion to insert the frontmatter field described. Use the
+Read then Edit pattern. Confirm each file changed.
+
+**skill-edit fix:**
+Locate the relevant installed skill file. Check in order:
+1. `.claude/skills/<name>/SKILL.md` (installed location in the wiki workspace)
+2. `skills/<name>/SKILL.md` (plugin source, if currently in the plugin repo)
+
+Insert the described step or guard at the appropriate position. Show a one-line description of
+what was added and where.
+
+**skill-create fix:**
+Determine whether to write to the installed location or the plugin source (same lookup as above,
+but create the directory and file if missing). Write a real skeleton SKILL.md with:
+- A one-sentence purpose description
+- Numbered steps derived from the suggestion's description
+- A constraints section if relevant
+
+Do not write placeholder stubs — the skeleton must be actionable.
+
+After applying all requested fixes, output:
+```
+Applied: fix <N>[, fix <N>...]
+Skipped (behavioral): fix <N>[, fix <N>...]  <- omit line if none
+```
+
+Do not commit after applying fixes — let the user review before wiki-close commits them.
+
+### 9. Constraints
+
+- Do not invent patterns not supported by actual file or conversation evidence
+- If a suggestion involves creating a new skill, name the skill and state in one sentence what it does
+- When applying a skill-create fix, write real numbered steps — never a placeholder
+- After applying fixes, do not auto-commit
