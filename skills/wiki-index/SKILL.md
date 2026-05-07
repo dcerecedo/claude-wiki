@@ -1,6 +1,6 @@
-# wiki-synth
+# wiki-index
 
-Cross-source synthesis: identifies term relationships across concept notes, builds and
+Index the wiki: identifies term relationships across concept notes, builds and
 updates the thesaurus, creates or updates Maps of Content (MOCs).
 
 Invoked automatically by wiki-ingest, or called standalone for a full rebuild.
