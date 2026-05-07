@@ -1,15 +1,10 @@
 ---
 title: {{TITLE}}
-tags: [synthesis]
+tags: [synthesis, {{DOMAIN_TAG}}]
 created: {{DATE}}
-sources: [{{SOURCE_LIST}}]
+updated: {{DATE}}
+concepts: {{CONCEPTS}}
+related_syntheses: {{RELATED_SYNTHESES}}
 ---
 
-## Synthesis
 {{CONTENT}}
-
-## Concepts
-{{CONCEPT_LINKS}}
-
-## Open Questions
-{{QUESTIONS}}
