@@ -3,10 +3,10 @@
 ## v1.2.0 — 2026-05-07
 
 ### Changes
-- `wiki-session-review` — suggestions now carry a `Fix:` line classifying the fix type
-  (`frontmatter`, `skill-edit`, `skill-create`, or `behavioral`). Users can reply
-  `fix <N>` or `fix all` to apply non-behavioral fixes in-session. Behavioral fixes
-  are flagged as non-applicable so the user knows no automatic action is possible.
+- `wiki-session-review` — conversational fix flow. After reporting problems the skill
+  asks which one to address, then proposes 2–3 options with pros, cons, and a
+  recommendation. The user picks or refines before anything is applied. Replaces the
+  previous numbered-list "fix N" shortcut.
 
 ## v1.1.0 — 2026-05-07
 
