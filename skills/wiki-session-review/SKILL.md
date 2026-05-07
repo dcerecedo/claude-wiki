@@ -64,16 +64,7 @@ echo "Raw sources: $(find raw -name '*.md' 2>/dev/null | wc -l)"
 echo "Last commit: $(git log -1 --format='%ar: %s' 2>/dev/null || echo 'no commits yet')"
 ```
 
-### 6. Classify each finding
-
-For each finding, determine its fix type before reporting:
-
-- `frontmatter` — add or edit a frontmatter field in one or more existing files
-- `skill-edit` — insert a step or guard into an existing SKILL.md
-- `skill-create` — create a new `skills/wiki-<name>/SKILL.md` encapsulating the procedure
-- `behavioral` — no file change possible; guidance only (e.g., session size, workflow habits)
-
-### 7. Report
+### 6. Report
 
 Use exactly this format:
 
@@ -81,60 +72,78 @@ Use exactly this format:
 Wiki: <topic from CLAUDE.md first H1> | <N> concepts | <N> thesaurus | <N> raw sources
 Last session: <relative time> — "<last commit message>"
 
-Suggestions:
-1. <suggestion>
-   Fix: <one-line description of what applying the fix would do>
-
-2. <suggestion>
-   Fix: behavioral — no automatic fix available
-
+Patterns found:
+- <problem>
+- <problem>
 ...
 
-To apply a fix, reply: fix <N>  — or fix all to apply all non-behavioral fixes.
+Would you like to address any of these? If so, which one?
 ```
 
-Number each suggestion. Every suggestion must have a `Fix:` line. Behavioral fixes must say
-`behavioral — no automatic fix available` so the user knows upfront that no action is possible.
+If there are no problems: write `No patterns identified — clean session history.` and stop.
 
-If there are no suggestions: write `No patterns identified — clean session history.` with no fix prompt.
+### 7. Wait for the user to pick a problem
 
-### 8. Apply fixes on request
+Do not proceed until the user selects a problem or says they are done.
+If the user says they are done or not interested, end the skill gracefully.
 
-When the user replies with `fix <N>` or `fix all`, apply each requested fix according to its type.
-Skip behavioral fixes silently (they cannot be applied) and note them in the confirmation.
+### 8. Propose options for the chosen problem
 
-**frontmatter fix:**
-Edit the file(s) named in the suggestion to insert the frontmatter field described. Use the
-Read then Edit pattern. Confirm each file changed.
+Generate 2–3 concrete fix options for the selected problem. For each option:
 
-**skill-edit fix:**
-Locate the relevant installed skill file. Check in order:
-1. `.claude/skills/<name>/SKILL.md` (installed location in the wiki workspace)
-2. `skills/<name>/SKILL.md` (plugin source, if currently in the plugin repo)
-
-Insert the described step or guard at the appropriate position. Show a one-line description of
-what was added and where.
-
-**skill-create fix:**
-Determine whether to write to the installed location or the plugin source (same lookup as above,
-but create the directory and file if missing). Write a real skeleton SKILL.md with:
-- A one-sentence purpose description
-- Numbered steps derived from the suggestion's description
-- A constraints section if relevant
-
-Do not write placeholder stubs — the skeleton must be actionable.
-
-After applying all requested fixes, output:
 ```
-Applied: fix <N>[, fix <N>...]
-Skipped (behavioral): fix <N>[, fix <N>...]  <- omit line if none
+Option A — <short name>
+<One-paragraph description of what this fix does and how it works.>
+Pro: <main advantage>
+Con: <main drawback or trade-off>
+
+Option B — <short name>
+...
+
+Option C — <short name>  (omit if only two good options exist)
+...
+
+Recommended: Option <X> — <one sentence on why>
 ```
 
-Do not commit after applying fixes — let the user review before wiki-close commits them.
+Ground each option in real files and steps, not generalities. If an option involves editing
+a SKILL.md, name the file and describe which step would change. If it involves adding
+frontmatter, name the specific files. If it involves creating a new skill, name the skill.
 
-### 9. Constraints
+### 9. Wait for the user to choose or refine
+
+Do not apply anything yet. The user may:
+- Pick an option by letter or name
+- Ask to modify an option (e.g., "Option A but without X")
+- Ask a follow-up question about trade-offs
+
+Respond to refinements by adjusting the option description and confirming the revised plan
+before applying. Keep iterating until the user gives explicit approval to proceed.
+
+### 10. Apply the chosen fix
+
+Once the user approves, apply the fix:
+
+**Frontmatter change:** Read the file(s), then Edit to insert the field. Confirm each file changed.
+
+**SKILL.md edit:** Locate the skill file — check `.claude/skills/<name>/SKILL.md` first
+(installed location), then `skills/<name>/SKILL.md` (plugin source). Read it, then Edit to
+insert or modify the relevant step. Show a brief description of what changed and where.
+
+**New skill:** Determine the right location (same lookup as above, create if missing). Write a
+real SKILL.md with a one-sentence purpose, numbered steps derived from the agreed plan, and a
+constraints section if relevant. No placeholder stubs — the skill must be immediately usable.
+
+After applying, confirm what was done in one or two sentences, then ask:
+```
+Anything else to address from the list?
+```
+
+If the user wants to address another problem, return to step 8 with the new selection.
+
+### 11. Constraints
 
 - Do not invent patterns not supported by actual file or conversation evidence
-- If a suggestion involves creating a new skill, name the skill and state in one sentence what it does
-- When applying a skill-create fix, write real numbered steps — never a placeholder
-- After applying fixes, do not auto-commit
+- Never apply a fix before the user explicitly approves it
+- When writing a new skill, write real numbered steps — never a placeholder
+- Do not auto-commit after applying fixes — let wiki-close handle that
