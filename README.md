@@ -8,7 +8,15 @@ thesaurus, and synthesizing connections across concepts.
 
 ## Install
 
-    claude plugin install wiki@<source>
+**Latest** (always tracks `main`):
+
+    /plugin marketplace add https://github.com/dcerecedo/claude-wiki/archive/refs/heads/main.zip
+    /plugin install wiki@claude-wiki
+
+**Pinned to a specific version** (replace `v1.0.0` with the desired tag):
+
+    /plugin marketplace add https://github.com/dcerecedo/claude-wiki/archive/refs/tags/v1.0.0.zip
+    /plugin install wiki@claude-wiki
 
 ## Usage
 
