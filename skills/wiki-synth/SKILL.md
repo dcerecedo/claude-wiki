@@ -72,7 +72,7 @@ re-present the revised plan before writing anything.
 
 For each article in the confirmed plan, write `wiki/syntheses/<slug>.md`.
 
-Read `skills/wiki-init/templates/synthesis.md.template` and fill in:
+Read `skills/wiki-synth/templates/synthesis.md.template` and fill in:
 
 | Placeholder | Value |
 |---|---|

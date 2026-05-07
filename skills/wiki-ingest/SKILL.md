@@ -31,7 +31,7 @@ Example: "Attention Is All You Need (2017)" → `attention-is-all-you-need-2017`
 
 ### 3. Store raw record
 
-Read `skills/wiki-init/templates/source.md.template`. Fill in every placeholder:
+Read `skills/wiki-ingest/templates/source.md.template`. Fill in every placeholder:
 
 | Placeholder | Value |
 |---|---|
@@ -58,7 +58,7 @@ For each concept identified in step 3:
 - Add `[[wikilinks]]` to any new related concepts from this same ingest
 
 **If `wiki/concepts/<concept-slug>.md` does not exist:**
-Read `skills/wiki-init/templates/note.md.template`. Fill in:
+Read `skills/wiki-ingest/templates/note.md.template`. Fill in:
 
 | Placeholder | Value |
 |---|---|
