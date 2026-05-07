@@ -77,7 +77,7 @@ Read `skills/wiki-init/templates/synthesis.md.template` and fill in:
 | Placeholder | Value |
 |---|---|
 | `{{TITLE}}` | Article title |
-| `{{DOMAIN_TAG}}` | Short domain tag from the wiki topic (e.g. `ml`, `physics`) |
+| `{{DOMAIN_TAG}}` | Short domain tag: derive from the `tags:` frontmatter of the concept notes being covered, or infer from the topic name if no consistent tag is present (e.g. `ml`, `physics`) |
 | `{{DATE}}` | Today's date in YYYY-MM-DD format |
 | `{{CONCEPTS}}` | YAML list: `["[[concept-a]]", "[[concept-b]]"]` |
 | `{{RELATED_SYNTHESES}}` | YAML list: `["[[other-synthesis]]"]`, or `[]` if none |
