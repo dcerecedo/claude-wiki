@@ -1,7 +1,7 @@
 # wiki-ingest
 
 Ingest a source into the wiki. Stores the raw record, atomizes into concept notes,
-then calls wiki-synth to update the thesaurus.
+then calls wiki-index to update the thesaurus.
 
 ## Usage
 
@@ -71,9 +71,9 @@ Read `skills/wiki-init/templates/note.md.template`. Fill in:
 
 Write to `wiki/concepts/<concept-slug>.md`.
 
-### 5. Call wiki-synth
+### 5. Call wiki-index
 
-Invoke the `wiki-synth` skill to update thesaurus terms and MOCs based on the new
+Invoke the `wiki-index` skill to update thesaurus terms and MOCs based on the new
 and updated concept notes.
 
 ### 6. Report
@@ -81,7 +81,7 @@ and updated concept notes.
 Tell the user:
 - Raw source stored at `raw/<slug>.md`
 - How many concept notes were created vs updated, with their `[[wikilinks]]`
-- That thesaurus was updated (wiki-synth will report details)
+- That thesaurus was updated (wiki-index will report details)
 
 Example:
 "Ingested 'Attention Is All You Need'. Stored `raw/attention-is-all-you-need-2017.md`.

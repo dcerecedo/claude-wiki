@@ -39,7 +39,7 @@ wiki-plugin/                        ← git repo, distributed as a plugin
       SKILL.md
     wiki-ingest/
       SKILL.md
-    wiki-synth/
+    wiki-index/
       SKILL.md
     wiki-query/
       SKILL.md
@@ -137,8 +137,9 @@ Both layers are redundant by design — either one alone is sufficient to trigge
 | `wiki-init` | User | Creates workspace, generates CLAUDE.md + settings.json, runs git init, optionally sets remote |
 | `wiki-open` | Hook or user | git pull (if remote), runs wiki-session-review, reports session context |
 | `wiki-close` | Hook or user | Commits all changes with descriptive message, git push (if remote) |
-| `wiki-ingest` | User | Stores raw source, atomizes into concept notes, calls wiki-synth |
-| `wiki-synth` | User or ingest | Cross-source synthesis, builds/updates thesaurus terms and MOCs |
+| `wiki-ingest` | User | Stores raw source, atomizes into concept notes, calls wiki-index |
+| `wiki-index` | User or ingest | Index the wiki: builds/updates thesaurus terms and MOCs |
+| `wiki-synth` | User | Write narrative synthesis articles from concept clusters |
 | `wiki-query` | User | Structured query returning concept notes + thesaurus terms + source refs |
 | `wiki-session-review` | wiki-open | Reads project conversation history + git log, identifies patterns, proposes optimizations |
 
@@ -242,9 +243,9 @@ Source can be URL, file path, or pasted text.
 1. Fetch/read source → store in `raw/<slug>.md` (title, URL, date, type, key excerpts, agent summary)
 2. Identify 3–10 concepts in the source
 3. For each concept: create or update `wiki/concepts/<concept>.md` — one idea, YAML frontmatter, `[[links]]` to related concepts, back-reference to raw source
-4. Call `wiki-synth` internally to update thesaurus terms touched by this ingest
+4. Call `wiki-index` internally to update thesaurus terms touched by this ingest
 
-### Synthesize (`wiki-synth`)
+### Index (`wiki-index`)
 Can be called standalone or triggered by ingest.
 
 1. Scan concept notes modified since last synthesis (via git)
