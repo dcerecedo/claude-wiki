@@ -1,3 +1,10 @@
+---
+name: wiki-synth
+description: Write narrative synthesis articles for a concept cluster. Produces thorough, logically structured explanations in the style of Feynman, Sagan, or Tyson. Output lives in wiki/syntheses/.
+when_to_use: Use when the user wants a narrative explanation of a topic, asks to "synthesize" concepts, or says "write a synthesis", "explain this topic", or "create an article about".
+argument-hint: <topic or concept cluster>
+---
+
 # wiki-synth
 
 Write narrative synthesis articles for a concept cluster — thorough, rigorous,

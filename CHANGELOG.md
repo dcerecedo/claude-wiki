@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.2.1 — 2026-05-07
+
+### Changes
+- All skill SKILL.md files now include `name`, `description`, and `when_to_use` frontmatter.
+  Skills that accept arguments also include `argument-hint` and `arguments`.
+
 ## v1.2.0 — 2026-05-07
 
 ### Changes

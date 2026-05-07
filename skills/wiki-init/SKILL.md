@@ -1,3 +1,11 @@
+---
+name: wiki-init
+description: Initialize a new wiki workspace for personal learning research. Creates the directory structure, generates CLAUDE.md and settings.json from templates, runs git init, and optionally sets a remote.
+when_to_use: Use when the user wants to create a new wiki, start a new research topic, or says "create wiki", "new wiki", or "init wiki".
+argument-hint: <topic> [research-question]
+arguments: [topic, research-question]
+---
+
 # wiki-init
 
 Initialize a new wiki workspace for personal learning research.

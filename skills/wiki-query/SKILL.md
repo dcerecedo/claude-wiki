@@ -1,3 +1,10 @@
+---
+name: wiki-query
+description: Query the wiki knowledge base. Returns a structured answer drawn from concept notes, thesaurus terms, and syntheses, with source references and flagged gaps where knowledge is missing.
+when_to_use: Use when the user asks a question about the wiki topic, wants to look something up in the wiki, or says "query", "search wiki", "what does the wiki say about", or "find in wiki".
+argument-hint: <question>
+---
+
 # wiki-query
 
 Query the wiki knowledge base. Returns a structured answer drawn from concept notes,

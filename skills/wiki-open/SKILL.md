@@ -1,3 +1,9 @@
+---
+name: wiki-open
+description: Start a wiki session by pulling latest changes from remote if configured, running wiki-session-review, and reporting the current session context. Run at the start of every wiki work session.
+when_to_use: Use at the beginning of a wiki session, when resuming research, or when the user says "open wiki", "start session", or "start wiki".
+---
+
 # wiki-open
 
 Start a wiki session. Pull latest changes from remote if configured, then run

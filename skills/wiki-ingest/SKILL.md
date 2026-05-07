@@ -1,3 +1,10 @@
+---
+name: wiki-ingest
+description: Ingest a source (URL, file path, or pasted text) into the wiki. Stores the raw record, atomizes content into concept notes, and calls wiki-index to update the thesaurus.
+when_to_use: Use when the user provides a URL, PDF, article, paper, or text to add to the wiki, or says "ingest", "add this source", "read this", or "add to wiki".
+argument-hint: <url|filepath|text>
+---
+
 # wiki-ingest
 
 Ingest a source into the wiki. Stores the raw record, atomizes into concept notes,

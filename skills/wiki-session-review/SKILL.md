@@ -1,3 +1,9 @@
+---
+name: wiki-session-review
+description: Analyze previous sessions to identify patterns of failure, repetitive work, and optimization opportunities. Reports findings and guides the user through fix options conversationally. Called automatically by wiki-open.
+when_to_use: Use to review past session patterns, identify workflow inefficiencies, or when the user says "review sessions", "what went wrong", or "how can I improve my wiki workflow".
+---
+
 # wiki-session-review
 
 Analyze previous sessions to identify patterns of failure, repetitive work, and

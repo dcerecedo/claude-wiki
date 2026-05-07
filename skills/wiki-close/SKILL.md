@@ -1,3 +1,9 @@
+---
+name: wiki-close
+description: End a wiki session by committing all changes with a descriptive message and pushing to remote if configured. Run at the end of every wiki work session.
+when_to_use: Use when finishing a wiki session, wrapping up research, or when the user says "close wiki", "end session", "done for today", or "commit and push".
+---
+
 # wiki-close
 
 End a wiki session. Commit all changes with a descriptive message, then push to

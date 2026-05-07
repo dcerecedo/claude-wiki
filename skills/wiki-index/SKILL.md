@@ -1,3 +1,9 @@
+---
+name: wiki-index
+description: Index the wiki by scanning concept notes, identifying term relationships, building and updating thesaurus entries, and creating or updating Maps of Content (MOCs). Called automatically after wiki-ingest.
+when_to_use: Use after adding or editing concept notes, when thesaurus terms are stale, when MOCs need rebuilding, or when the user says "index the wiki", "update thesaurus", or "rebuild MOCs".
+---
+
 # wiki-index
 
 Index the wiki: identifies term relationships across concept notes, builds and
