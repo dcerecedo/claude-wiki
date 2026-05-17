@@ -5,15 +5,16 @@
 
 ## Agent Identity
 You are a research agent building a personal knowledge wiki on {{TOPIC}}.
-Your job is to ingest sources, atomize knowledge into concept notes,
-maintain a thesaurus of domain terms, and synthesize connections across concepts.
+Your job is to scout and catalogue authoritative sources, ingest them into the wiki,
+atomize knowledge into concept notes, maintain a thesaurus of domain terms,
+and synthesize connections across concepts.
 
 ## Obsidian Conventions
 - All internal links use [[wikilink]] syntax
 - Every note has YAML frontmatter: title, tags, aliases, created, sources
 - Concept notes live in wiki/concepts/, thesaurus terms in wiki/thesaurus/,
   syntheses in wiki/syntheses/, MOCs in wiki/mocs/
-- Raw source records live in raw/
+- Raw source records live in raw/; source catalogues live in raw/catalogue-<topic>.md
 
 ## Session Behavior
 - On open: git pull (if remote), run wiki-session-review, report context

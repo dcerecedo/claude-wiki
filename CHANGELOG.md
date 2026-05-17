@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.3.1 — 2026-05-17
+
+### Changes
+- Updated `CLAUDE.md.template` to reflect the expanded workflow: agent identity now mentions source scouting, and Obsidian Conventions notes that `raw/` holds both ingested records and `catalogue-*.md` files.
+
+## v1.3.0 — 2026-05-17
+
+### New Skills
+- `wiki-sources` — scout and catalogue authoritative sources for a topic before ingestion. Stores results in `raw/catalogue-<topic>.md` with fetched abstracts and quality rationale for each source. Feeds into `/wiki-ingest`.
+
 ## v1.2.1 — 2026-05-07
 
 ### Changes
