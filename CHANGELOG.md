@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.3.0 — 2026-05-17
+
+### New Skills
+- `wiki-sources` — scout and catalogue authoritative sources for a topic before ingestion. Stores results in `raw/catalogue-<topic>.md` with fetched abstracts and quality rationale for each source. Feeds into `/wiki-ingest`.
+
 ## v1.2.1 — 2026-05-07
 
 ### Changes

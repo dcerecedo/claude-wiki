@@ -1,0 +1,16 @@
+---
+title: Source Catalogue — {{TOPIC}}
+tags: [catalogue]
+created: {{DATE}}
+---
+
+# Source Catalogue: {{TOPIC}}
+
+> Generated: {{DATE}}
+
+Authoritative sources identified for research on **{{TOPIC}}**.
+Use `/wiki-ingest <url>` to ingest any source into the wiki.
+
+---
+
+{{SOURCE_ENTRIES}}
